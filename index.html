@@ -1,65 +1,19 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسجيل الدخول</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #2ea44f;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <h2>تسجيل الدخول</h2>
-    <input type="email" id="email" placeholder="البريد الإلكتروني">
-    <input type="password" id="password" placeholder="كلمة المرور">
-    <button onclick="saveData()">تسجيل الدخول</button>
-
-    <script>
-        async function saveData() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (!email || !password) {
-                alert('الرجاء إدخال جميع البيانات');
-                return;
-            }
-
-            const userData = `\nبيانات جديدة:\nالبريد: ${email}\nكلمة المرور: ${password}\nالتاريخ: ${new Date().toLocaleString()}\n`;
-            
-            try {
-                // تأكد من أنك مسجل الدخول إلى GitHub في VS Code.dev
-                if (typeof github !== 'undefined') {
-                    // احفظ البيانات في ملف في المستودع الحالي
-                    await github.writeFile('user_data.txt', userData, { append: true });
-                    alert('تم حفظ البيانات بنجاح في user_data.txt');
-                } else {
-                    // إذا لم يكن متصلاً بـ GitHub، استخدم localStorage كبديل
-                    localStorage.setItem('last_login', userData);
-                    alert('تم حفظ البيانات محلياً (تسجيل الدخول إلى GitHub في VS Code.dev للحفظ في الملف)');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('حدث خطأ أثناء الحفظ: ' + error.message);
-            }
-        }
-    </script>
+        <div class="social-icon">
+            <i href="google.com" class="fab fa-facebook icon"></i>
+            <i class="fab fa-whatsapp icon"></i>
+            <i class="fab fa-twitter icon"></i>
+            <i class="fab fa-twitter icon"></i>
+            <i class="fab fa-windows icon"></i>          
+        </div>
+    </div>
 </body>
 </html>

@@ -1,36 +1,27 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const app = express();
-const PORT = 3000;
+document.getElementById("login-btn").addEventListener("click", function() {
+    const email = document.getElementById("your-email").value;
+    const password = document.getElementById("your-password").value;
 
-// Middleware لتحليل JSON
-app.use(express.json());
-app.use(express.static('public'));
-
-// مسار تسجيل الدخول
-app.post('/login', (req, res) => {
-    const { email, password } = req.body;
-    
     if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required' });
+        alert("Please fill in all fields!");
+        return;
     }
-    
-    // تسجيل بيانات المستخدم في الملف
-    const logData = `User: ${email} | Login Time: ${new Date().toISOString()}\n`;
-    
-    fs.appendFile(path.join(__dirname, 'user_log.txt'), logData, (err) => {
-        if (err) {
-            console.error('Error writing to log file:', err);
-            return res.status(500).json({ message: 'Error saving login data' });
-        }
-        
-        console.log('Login data saved successfully');
-        res.json({ message: 'Login successful' });
-    });
-});
 
-// تشغيل الخادم
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    // بيانات المستخدم لتسجيلها
+    const userData = `Email: ${email} | Password: ${password} | Login Time: ${new Date().toLocaleString()}\n`;
+
+    // إنشاء كائن Blob لحفظ البيانات
+    const blob = new Blob([userData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    // إنشاء رابط تحميل للملف
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "User_io.txt";
+    a.click();
+
+    // تحرير الذاكرة
+    URL.revokeObjectURL(url);
+
+    alert("Login successful! User data saved.");
 });

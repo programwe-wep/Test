@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الصور التفاعلي</title>
+    <title>واجهة الدخول</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* تنسيقات عامة */
+        /* التنسيقات العامة */
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +15,7 @@
         }
         
         body {
-            background-color: white;
+            background-color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -24,219 +24,284 @@
             overflow-x: hidden;
         }
         
-        /* معرض الصور */
-        .gallery-container {
+        /* حاوية رئيسية */
+        .main-container {
             width: 100%;
             max-width: 1200px;
-            padding: 2rem;
-            position: relative;
-        }
-        
-        .gallery-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #333;
-            font-size: 2rem;
-        }
-        
-        .gallery {
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            gap: 1rem;
-            padding-bottom: 1rem;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
         }
         
-        .gallery::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .gallery::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        .gallery::-webkit-scrollbar-thumb {
-            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-            border-radius: 10px;
-        }
-        
-        .gallery-item {
-            flex: 0 0 auto;
-            width: 300px;
-            height: 400px;
-            scroll-snap-align: start;
+        /* معرض الصور */
+        .image-gallery {
+            display: flex;
+            width: 100%;
+            height: 500px;
             position: relative;
-            border-radius: 15px;
+            margin-bottom: 3rem;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .gallery-item:hover {
-            transform: scale(1.03);
+        .gallery-slide {
+            min-width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
         }
         
-        .gallery-img {
+        .gallery-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
         }
         
-        .gallery-item:hover .gallery-img {
-            transform: scale(1.1);
-        }
-        
-        .img-caption {
+        .slide-caption {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
             color: white;
-            padding: 1.5rem 1rem 1rem;
+            padding: 2rem;
             text-align: center;
         }
         
-        /* أزرار التنقل */
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
+        .slide-caption h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
-        .btn {
-            padding: 0.8rem 2rem;
+        .slide-caption p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* نقاط التنقل */
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background-color: #4a6cf7;
+            transform: scale(1.2);
+        }
+        
+        /* نموذج الدخول */
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-btn {
+            padding: 0.8rem 1.5rem;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1rem;
             border: none;
             outline: none;
+            font-size: 1rem;
         }
         
         .login-btn {
-            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            background-color: #4a6cf7;
             color: white;
         }
         
         .signup-btn {
-            background: white;
-            color: #4facfe;
-            border: 2px solid #4facfe;
+            background-color: transparent;
+            color: #4a6cf7;
+            border: 2px solid #4a6cf7;
         }
         
-        .btn:hover {
+        .auth-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.3);
         }
         
-        .btn:active {
-            transform: translateY(0);
+        /* تأثيرات الحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        /* تأثيرات خاصة */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .image-gallery {
+            animation: fadeInUp 0.8s ease-out;
         }
         
-        .gallery-title, .gallery, .nav-buttons {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        .gallery {
-            animation-delay: 0.2s;
-        }
-        
-        .nav-buttons {
-            animation-delay: 0.4s;
+        .auth-container {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
         
         /* تصميم متجاوب */
         @media (max-width: 768px) {
-            .gallery-item {
-                width: 250px;
-                height: 350px;
+            .image-gallery {
+                height: 400px;
             }
             
-            .gallery-title {
+            .slide-caption h2 {
                 font-size: 1.5rem;
             }
             
-            .nav-buttons {
-                flex-direction: column;
-                gap: 1rem;
-                width: 80%;
+            .slide-caption p {
+                font-size: 1rem;
             }
             
-            .btn {
-                width: 100%;
+            .auth-container {
+                padding: 1.5rem;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="gallery-container">
-        <h1 class="gallery-title">تصفح معرض الصور التفاعلي</h1>
-        
-        <div class="gallery">
-            <!-- الصورة 1 -->
-            <div class="gallery-item">
-                <img src="https://source.unsplash.com/random/600x800/?nature" alt="Nature" class="gallery-img">
-                <div class="img-caption">
-                    <h3>مناظر طبيعية خلابة</h3>
-                    <p>استمتع بجمال الطبيعة الساحرة</p>
+    <div class="main-container">
+        <!-- معرض الصور -->
+        <div class="image-gallery">
+            <div class="gallery-slide active">
+                <img src="https://source.unsplash.com/random/1200x800/?technology" alt="Technology">
+                <div class="slide-caption">
+                    <h2>تكنولوجيا متطورة</h2>
+                    <p>اكتشف أحدث الابتكارات التقنية</p>
                 </div>
             </div>
             
-            <!-- الصورة 2 -->
-            <div class="gallery-item">
-                <img src="https://source.unsplash.com/random/600x800/?city" alt="City" class="gallery-img">
-                <div class="img-caption">
-                    <h3>حياة المدينة</h3>
-                    <p>اكتشف إيقاع الحياة الحضرية</p>
+            <div class="gallery-slide">
+                <img src="https://source.unsplash.com/random/1200x800/?nature" alt="Nature">
+                <div class="slide-caption">
+                    <h2>جمال الطبيعة</h2>
+                    <p>استمتع بمناظر طبيعية خلابة</p>
                 </div>
             </div>
             
-            <!-- الصورة 3 -->
-            <div class="gallery-item">
-                <img src="https://source.unsplash.com/random/600x800/?technology" alt="Tech" class="gallery-img">
-                <div class="img-caption">
-                    <h3>عالم التكنولوجيا</h3>
-                    <p>استكشف أحدث الابتكارات التقنية</p>
-                </div>
-            </div>
-            
-            <!-- الصورة 4 -->
-            <div class="gallery-item">
-                <img src="https://source.unsplash.com/random/600x800/?travel" alt="Travel" class="gallery-img">
-                <div class="img-caption">
-                    <h3>رحلات حول العالم</h3>
-                    <p>احلم وتخطيط لرحلتك القادمة</p>
-                </div>
-            </div>
-            
-            <!-- الصورة 5 -->
-            <div class="gallery-item">
-                <img src="https://source.unsplash.com/random/600x800/?food" alt="Food" class="gallery-img">
-                <div class="img-caption">
-                    <h3>أطباق لذيذة</h3>
-                    <p>اكتشف عالمًا من النكهات</p>
+            <div class="gallery-slide">
+                <img src="https://source.unsplash.com/random/1200x800/?architecture" alt="Architecture">
+                <div class="slide-caption">
+                    <h2>تصاميم معمارية</h2>
+                    <p>أعظم الإنجازات المعمارية</p>
                 </div>
             </div>
         </div>
         
-        <div class="nav-buttons">
-            <button class="btn login-btn">تسجيل الدخول</button>
-            <button class="btn signup-btn">إنشاء حساب</button>
+        <div class="gallery-dots">
+            <div class="dot active" data-slide="0"></div>
+            <div class="dot" data-slide="1"></div>
+            <div class="dot" data-slide="2"></div>
+        </div>
+        
+        <!-- نموذج الدخول -->
+        <div class="auth-container">
+            <h1 class="auth-title">مرحباً بك</h1>
+            
+            <div class="auth-buttons">
+                <button class="auth-btn login-btn">تسجيل الدخول</button>
+                <button class="auth-btn signup-btn">إنشاء حساب</button>
+            </div>
+            
+            <p>أو الدخول باستخدام</p>
+            
+            <div class="social-icons" style="margin-top: 1rem;">
+                <i class="fab fa-google social-icon" style="color: #DB4437; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+                <i class="fab fa-facebook-f social-icon" style="color: #4267B2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+                <i class="fab fa-twitter social-icon" style="color: #1DA1F2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+            </div>
         </div>
     </div>
+
+    <script>
+        // سكريبت لتحريك معرض الصور
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const dots = document.querySelectorAll('.dot');
+            let currentSlide = 0;
+            
+            // تغيير الشريحة عند النقر على النقاط
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    goToSlide(slideIndex);
+                });
+            });
+            
+            // التمرير التلقائي
+            setInterval(nextSlide, 5000);
+            
+            function goToSlide(n) {
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+                
+                currentSlide = (n + slides.length) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }
+            
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+            
+            // تأثيرات الأزرار
+            const buttons = document.querySelectorAll('.auth-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

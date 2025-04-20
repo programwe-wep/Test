@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تعلم Front-End</title>
+    <title>معرض الصور التفاعلي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         /* تنسيقات عامة */
@@ -11,251 +11,232 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+            background-color: white;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
         }
         
-        .container {
+        /* معرض الصور */
+        .gallery-container {
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
             padding: 2rem;
+            position: relative;
         }
         
-        header {
+        .gallery-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2rem;
         }
         
-        h1 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 1rem;
+        .gallery {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 1rem;
+            padding-bottom: 1rem;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            color: #7f8c8d;
+        .gallery::-webkit-scrollbar {
+            height: 8px;
         }
         
-        /* بطاقات البرامج التعليمية */
-        .courses {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+        .gallery::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
         }
         
-        .course-card {
-            background: white;
+        .gallery::-webkit-scrollbar-thumb {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+        }
+        
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 400px;
+            scroll-snap-align: start;
+            position: relative;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
         
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        .gallery-item:hover {
+            transform: scale(1.03);
         }
         
-        .course-image {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .course-image img {
+        .gallery-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
         }
         
-        .course-card:hover .course-image img {
+        .gallery-item:hover .gallery-img {
             transform: scale(1.1);
         }
         
-        .course-content {
-            padding: 1.5rem;
+        .img-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            text-align: center;
         }
         
-        .course-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-        }
-        
-        .course-description {
-            color: #7f8c8d;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-        
-        .course-meta {
+        /* أزرار التنقل */
+        .nav-buttons {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        .course-level {
-            background: #e0f7fa;
-            color: #00838f;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: bold;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
         .btn {
-            display: inline-block;
-            background: linear-gradient(to right, #3498db, #2c3e50);
-            color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 30px;
-            text-decoration: none;
             font-weight: bold;
-            transition: all 0.3s;
-            border: none;
             cursor: pointer;
-            margin-top: 1rem;
+            transition: all 0.3s;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+        }
+        
+        .login-btn {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .signup-btn {
+            background: white;
+            color: #4facfe;
+            border: 2px solid #4facfe;
         }
         
         .btn:hover {
-            background: linear-gradient(to right, #2980b9, #1a252f);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        /* تذييل الصفحة */
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem;
-            color: #7f8c8d;
+        .btn:active {
+            transform: translateY(0);
         }
         
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+        /* تأثيرات خاصة */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .social-icons a {
-            color: #7f8c8d;
-            font-size: 1.5rem;
-            transition: color 0.3s;
+        .gallery-title, .gallery, .nav-buttons {
+            animation: fadeIn 0.8s ease-out forwards;
         }
         
-        .social-icons a:hover {
-            color: #3498db;
+        .gallery {
+            animation-delay: 0.2s;
+        }
+        
+        .nav-buttons {
+            animation-delay: 0.4s;
         }
         
         /* تصميم متجاوب */
         @media (max-width: 768px) {
-            .courses {
-                grid-template-columns: 1fr;
+            .gallery-item {
+                width: 250px;
+                height: 350px;
             }
             
-            h1 {
-                font-size: 2rem;
+            .gallery-title {
+                font-size: 1.5rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                width: 80%;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>برامج تعليم Front-End</h1>
-            <p class="subtitle">اختر الدورة المناسبة لك وابدأ رحلتك في تطوير الواجهات الأمامية</p>
-        </header>
+    <div class="gallery-container">
+        <h1 class="gallery-title">تصفح معرض الصور التفاعلي</h1>
         
-        <div class="courses">
-            <!-- دورة HTML -->
-            <div class="course-card">
-                <div class="course-image">
-                    <img src="https://images.unsplash.com/photo-1621839673705-6617adf9e890?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="HTML Course">
-                </div>
-                <div class="course-content">
-                    <h3 class="course-title">HTML للمبتدئين</h3>
-                    <p class="course-description">
-                        تعلم أساسيات HTML لبناء هيكل صفحات الويب. ستتعلم كل العلامات الأساسية وكيفية تنظيم المحتوى بطريقة صحيحة.
-                    </p>
-                    <div class="course-meta">
-                        <span><i class="far fa-clock"></i> 10 ساعات</span>
-                        <span class="course-level">مبتدئ</span>
-                    </div>
-                    <a href="#" class="btn">ابدأ التعلم</a>
+        <div class="gallery">
+            <!-- الصورة 1 -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/random/600x800/?nature" alt="Nature" class="gallery-img">
+                <div class="img-caption">
+                    <h3>مناظر طبيعية خلابة</h3>
+                    <p>استمتع بجمال الطبيعة الساحرة</p>
                 </div>
             </div>
             
-            <!-- دورة CSS -->
-            <div class="course-card">
-                <div class="course-image">
-                    <img src="https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="CSS Course">
-                </div>
-                <div class="course-content">
-                    <h3 class="course-title">CSS المتقدم</h3>
-                    <p class="course-description">
-                        أتقن CSS لتصميم صفحات ويب جذابة. تعلم Flexbox, Grid, Animations وطرق التنسيق الاحترافية لإنشاء واجهات مستخدم رائعة.
-                    </p>
-                    <div class="course-meta">
-                        <span><i class="far fa-clock"></i> 15 ساعة</span>
-                        <span class="course-level">متوسط</span>
-                    </div>
-                    <a href="#" class="btn">ابدأ التعلم</a>
+            <!-- الصورة 2 -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/random/600x800/?city" alt="City" class="gallery-img">
+                <div class="img-caption">
+                    <h3>حياة المدينة</h3>
+                    <p>اكتشف إيقاع الحياة الحضرية</p>
                 </div>
             </div>
             
-            <!-- دورة JavaScript -->
-            <div class="course-card">
-                <div class="course-image">
-                    <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="JavaScript Course">
-                </div>
-                <div class="course-content">
-                    <h3 class="course-title">JavaScript الأساسي</h3>
-                    <p class="course-description">
-                        تعلم JavaScript لإضافة التفاعل لمواقعك. ستتعلم المفاهيم الأساسية مثل المتغيرات، الدوال، الأحداث ومعالجة DOM.
-                    </p>
-                    <div class="course-meta">
-                        <span><i class="far fa-clock"></i> 20 ساعة</span>
-                        <span class="course-level">مبتدئ</span>
-                    </div>
-                    <a href="#" class="btn">ابدأ التعلم</a>
+            <!-- الصورة 3 -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/random/600x800/?technology" alt="Tech" class="gallery-img">
+                <div class="img-caption">
+                    <h3>عالم التكنولوجيا</h3>
+                    <p>استكشف أحدث الابتكارات التقنية</p>
                 </div>
             </div>
             
-            <!-- دورة React -->
-            <div class="course-card">
-                <div class="course-image">
-                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="React Course">
+            <!-- الصورة 4 -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/random/600x800/?travel" alt="Travel" class="gallery-img">
+                <div class="img-caption">
+                    <h3>رحلات حول العالم</h3>
+                    <p>احلم وتخطيط لرحلتك القادمة</p>
                 </div>
-                <div class="course-content">
-                    <h3 class="course-title">React.js الاحترافي</h3>
-                    <p class="course-description">
-                        تعلم مكتبة React لبناء تطبيقات ويب حديثة. ستتعلم Components, State, Props, Hooks وكيفية بناء تطبيقات كاملة.
-                    </p>
-                    <div class="course-meta">
-                        <span><i class="far fa-clock"></i> 30 ساعة</span>
-                        <span class="course-level">متقدم</span>
-                    </div>
-                    <a href="#" class="btn">ابدأ التعلم</a>
+            </div>
+            
+            <!-- الصورة 5 -->
+            <div class="gallery-item">
+                <img src="https://source.unsplash.com/random/600x800/?food" alt="Food" class="gallery-img">
+                <div class="img-caption">
+                    <h3>أطباق لذيذة</h3>
+                    <p>اكتشف عالمًا من النكهات</p>
                 </div>
             </div>
         </div>
         
-        <footer>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-            <p>جميع الحقوق محفوظة &copy; 2023 أكاديمية تطوير الويب</p>
-        </footer>
+        <div class="nav-buttons">
+            <button class="btn login-btn">تسجيل الدخول</button>
+            <button class="btn signup-btn">إنشاء حساب</button>
+        </div>
     </div>
 </body>
 </html>

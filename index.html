@@ -15,35 +15,82 @@
         }
         
         body {
-            background-color: #ffffff;
+            background-color: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        /* إطار الهاتف المحمول */
+        .phone-frame {
+            width: 375px; /* عرض الهاتف النموذجي */
+            height: 667px; /* ارتفاع الهاتف النموذجي */
+            background: #111;
+            border-radius: 40px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                        inset 0 0 10px rgba(255, 255, 255, 0.1);
+            border: 10px solid #222;
+        }
+        
+        /* شاشة الهاتف */
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* شريط الحالة العلوي */
+        .status-bar {
+            height: 30px;
+            background: #f8f8f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .time {
+            font-weight: bold;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* حاوية المحتوى */
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-        }
-        
-        /* حاوية رئيسية */
-        .main-container {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
         }
         
         /* معرض الصور */
         .image-gallery {
             display: flex;
             width: 100%;
-            height: 500px;
+            height: 200px;
             position: relative;
-            margin-bottom: 3rem;
-            border-radius: 20px;
+            margin-bottom: 2rem;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .gallery-slide {
@@ -66,18 +113,18 @@
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
             color: white;
-            padding: 2rem;
+            padding: 1rem;
             text-align: center;
         }
         
         .slide-caption h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
         .slide-caption p {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
         }
         
@@ -85,15 +132,16 @@
         .gallery-dots {
             display: flex;
             justify-content: center;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
         }
         
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background-color: #ddd;
-            margin: 0 5px;
+            margin: 0 4px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -106,37 +154,37 @@
         /* نموذج الدخول */
         .auth-container {
             width: 100%;
-            max-width: 400px;
             background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             text-align: center;
-            margin-top: 2rem;
         }
         
         .auth-title {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             color: #333;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
         
         .auth-buttons {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+            width: 100%;
         }
         
         .auth-btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
+            padding: 0.7rem;
+            border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             border: none;
             outline: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            width: 100%;
         }
         
         .login-btn {
@@ -151,8 +199,45 @@
         }
         
         .auth-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(74, 108, 247, 0.2);
+        }
+        
+        .social-login {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .fa-google { color: #DB4437; }
+        .fa-facebook-f { color: #4267B2; }
+        .fa-twitter { color: #1DA1F2; }
+        
+        /* زر الهوم */
+        .home-button {
+            width: 50px;
+            height: 5px;
+            background: #ccc;
+            border-radius: 5px;
+            margin: 10px auto;
+            cursor: pointer;
         }
         
         /* تأثيرات الحركة */
@@ -174,82 +259,77 @@
         .auth-container {
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
-        
-        /* تصميم متجاوب */
-        @media (max-width: 768px) {
-            .image-gallery {
-                height: 400px;
-            }
-            
-            .slide-caption h2 {
-                font-size: 1.5rem;
-            }
-            
-            .slide-caption p {
-                font-size: 1rem;
-            }
-            
-            .auth-container {
-                padding: 1.5rem;
-            }
-            
-            .auth-title {
-                font-size: 1.5rem;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- معرض الصور -->
-        <div class="image-gallery">
-            <div class="gallery-slide active">
-                <img src="https://source.unsplash.com/random/1200x800/?technology" alt="Technology">
-                <div class="slide-caption">
-                    <h2>تكنولوجيا متطورة</h2>
-                    <p>اكتشف أحدث الابتكارات التقنية</p>
+    <div class="phone-frame">
+        <div class="phone-screen">
+            <!-- شريط الحالة العلوي -->
+            <div class="status-bar">
+                <div class="time">12:30</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
                 </div>
             </div>
             
-            <div class="gallery-slide">
-                <img src="https://source.unsplash.com/random/1200x800/?nature" alt="Nature">
-                <div class="slide-caption">
-                    <h2>جمال الطبيعة</h2>
-                    <p>استمتع بمناظر طبيعية خلابة</p>
+            <!-- محتوى الهاتف -->
+            <div class="content-container">
+                <!-- معرض الصور -->
+                <div class="image-gallery">
+                    <div class="gallery-slide active">
+                        <img src="https://source.unsplash.com/random/600x800/?technology" alt="Technology">
+                        <div class="slide-caption">
+                            <h2>تكنولوجيا متطورة</h2>
+                            <p>اكتشف أحدث الابتكارات</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://source.unsplash.com/random/600x800/?nature" alt="Nature">
+                        <div class="slide-caption">
+                            <h2>جمال الطبيعة</h2>
+                            <p>استمتع بمناظر خلابة</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://source.unsplash.com/random/600x800/?architecture" alt="Architecture">
+                        <div class="slide-caption">
+                            <h2>تصاميم معمارية</h2>
+                            <p>أعظم الإنجازات</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-dots">
+                    <div class="dot active" data-slide="0"></div>
+                    <div class="dot" data-slide="1"></div>
+                    <div class="dot" data-slide="2"></div>
+                </div>
+                
+                <!-- نموذج الدخول -->
+                <div class="auth-container">
+                    <h1 class="auth-title">مرحباً بك</h1>
+                    
+                    <div class="auth-buttons">
+                        <button class="auth-btn login-btn">تسجيل الدخول</button>
+                        <button class="auth-btn signup-btn">إنشاء حساب</button>
+                    </div>
+                    
+                    <div class="social-login">أو الدخول باستخدام</div>
+                    
+                    <div class="social-icons">
+                        <i class="fab fa-google social-icon"></i>
+                        <i class="fab fa-facebook-f social-icon"></i>
+                        <i class="fab fa-twitter social-icon"></i>
+                    </div>
                 </div>
             </div>
             
-            <div class="gallery-slide">
-                <img src="https://source.unsplash.com/random/1200x800/?architecture" alt="Architecture">
-                <div class="slide-caption">
-                    <h2>تصاميم معمارية</h2>
-                    <p>أعظم الإنجازات المعمارية</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="gallery-dots">
-            <div class="dot active" data-slide="0"></div>
-            <div class="dot" data-slide="1"></div>
-            <div class="dot" data-slide="2"></div>
-        </div>
-        
-        <!-- نموذج الدخول -->
-        <div class="auth-container">
-            <h1 class="auth-title">مرحباً بك</h1>
-            
-            <div class="auth-buttons">
-                <button class="auth-btn login-btn">تسجيل الدخول</button>
-                <button class="auth-btn signup-btn">إنشاء حساب</button>
-            </div>
-            
-            <p>أو الدخول باستخدام</p>
-            
-            <div class="social-icons" style="margin-top: 1rem;">
-                <i class="fab fa-google social-icon" style="color: #DB4437; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
-                <i class="fab fa-facebook-f social-icon" style="color: #4267B2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
-                <i class="fab fa-twitter social-icon" style="color: #1DA1F2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
-            </div>
+            <!-- زر الهوم -->
+            <div class="home-button"></div>
         </div>
     </div>
 
@@ -294,13 +374,24 @@
                 });
                 
                 button.addEventListener('mouseup', function() {
-                    this.style.transform = 'translateY(-3px)';
+                    this.style.transform = 'translateY(-2px)';
                 });
                 
                 button.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0)';
                 });
             });
+            
+            // تحديث الوقت
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                document.querySelector('.time').textContent = `${hours}:${minutes}`;
+            }
+            
+            updateTime();
+            setInterval(updateTime, 60000);
         });
     </script>
 </body>

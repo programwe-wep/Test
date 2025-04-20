@@ -1,170 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعلم Front-End</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title> Sign Up - Form</title>
     <style>
-            /* تنسيقات عامة */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-            
-            body {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #333;
-            }
-            
-            .contanier-signup {
-                background-color: white;
-                padding: 2.5rem;
-                border-radius: 15px;
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-                width: 400px;
-                max-width: 90%;
-                text-align: center;
-                transition: all 0.3s ease;
-            }
-            
-            .contanier-signup:hover {
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        /* تنسيقات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        
+        /* بطاقات البرامج التعليمية */
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .course-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .course-level {
+            background: #e0f7fa;
+            color: #00838f;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #2980b9, #1a252f);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-icons a {
+            color: #7f8c8d;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #3498db;
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .courses {
+                grid-template-columns: 1fr;
             }
             
             h1 {
-                margin-bottom: 1.5rem;
-                color: #4a4a4a;
-                font-weight: 600;
+                font-size: 2rem;
             }
-            
-            /* تنسيقات حقول الإدخال */
-            input {
-                width: 100%;
-                padding: 12px 15px;
-                margin-bottom: 1rem;
-                border: 2px solid #e0e0e0;
-                border-radius: 8px;
-                font-size: 1rem;
-                transition: all 0.3s ease;
-            }
-            
-            input:focus {
-                border-color: #667eea;
-                outline: none;
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-            }
-            
-            input::placeholder {
-                color: #aaa;
-            }
-            
-            /* تنسيق الزر */
-            button {
-                width: 100%;
-                padding: 12px;
-                background: linear-gradient(to right, #667eea, #764ba2);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-top: 0.5rem;
-            }
-            
-            button:hover {
-                background: linear-gradient(to right, #5a6fd1, #6a4298);
-                transform: translateY(-2px);
-            }
-            
-            button:active {
-                transform: translateY(0);
-            }
-            
-            /* تنسيق الرابط */
-            p {
-                margin: 1.5rem 0;
-                color: #666;
-            }
-            
-            a {
-                color: #667eea;
-                text-decoration: none;
-                font-weight: 600;
-                transition: all 0.2s ease;
-            }
-            
-            a:hover {
-                color: #764ba2;
-                text-decoration: underline;
-            }
-            
-            /* تنسيق الأيقونات الاجتماعية */
-            .social-icon {
-                display: flex;
-                justify-content: center;
-                gap: 1.5rem;
-                margin-top: 1.5rem;
-            }
-            
-            .icon {
-                font-size: 1.5rem;
-                color: #666;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .icon:hover {
-                transform: scale(1.2);
-            }
-            
-            .fa-facebook:hover {
-                color: #3b5998;
-            }
-            
-            .fa-twitter:hover {
-                color: #1da1f2;
-            }
-            
-            .fa-chrome:hover {
-                color: #4285f4;
-            }
-            
-            /* تأثيرات للجوال */
-            @media (max-width: 480px) {
-                .contanier-signup {
-                    padding: 1.5rem;
-                }
-                
-                h1 {
-                    font-size: 1.5rem;
-                }
-            }
+        }
     </style>
 </head>
 <body>
-    <div class="contanier-signup">
-   <h1>Sign Up</h1>
-   <input type="email" placeholder="Useremail" id="your-email">
-   <input type="password" placeholder="Password" id="your-password">
-   <input type="text" placeholder="Again password" id="again-password">
-   <button type="submit">Sign</button>
-   <p>
-    Have an accont <a href="#">Login</a>
-   </p>
-   <div class="social-icon">
-    <i class="fab fa-facebook icon"></i>
-    <i class="fab fa-twitter icon"></i>
-    <i class="fab fa-chrome icon"></i>  
-   </div>
+    <div class="container">
+        <header>
+            <h1>برامج تعليم Front-End</h1>
+            <p class="subtitle">اختر الدورة المناسبة لك وابدأ رحلتك في تطوير الواجهات الأمامية</p>
+        </header>
+        
+        <div class="courses">
+            <!-- دورة HTML -->
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://images.unsplash.com/photo-1621839673705-6617adf9e890?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="HTML Course">
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">HTML للمبتدئين</h3>
+                    <p class="course-description">
+                        تعلم أساسيات HTML لبناء هيكل صفحات الويب. ستتعلم كل العلامات الأساسية وكيفية تنظيم المحتوى بطريقة صحيحة.
+                    </p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 10 ساعات</span>
+                        <span class="course-level">مبتدئ</span>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+            
+            <!-- دورة CSS -->
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="CSS Course">
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">CSS المتقدم</h3>
+                    <p class="course-description">
+                        أتقن CSS لتصميم صفحات ويب جذابة. تعلم Flexbox, Grid, Animations وطرق التنسيق الاحترافية لإنشاء واجهات مستخدم رائعة.
+                    </p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 15 ساعة</span>
+                        <span class="course-level">متوسط</span>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+            
+            <!-- دورة JavaScript -->
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="JavaScript Course">
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">JavaScript الأساسي</h3>
+                    <p class="course-description">
+                        تعلم JavaScript لإضافة التفاعل لمواقعك. ستتعلم المفاهيم الأساسية مثل المتغيرات، الدوال، الأحداث ومعالجة DOM.
+                    </p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 20 ساعة</span>
+                        <span class="course-level">مبتدئ</span>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+            
+            <!-- دورة React -->
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="React Course">
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">React.js الاحترافي</h3>
+                    <p class="course-description">
+                        تعلم مكتبة React لبناء تطبيقات ويب حديثة. ستتعلم Components, State, Props, Hooks وكيفية بناء تطبيقات كاملة.
+                    </p>
+                    <div class="course-meta">
+                        <span><i class="far fa-clock"></i> 30 ساعة</span>
+                        <span class="course-level">متقدم</span>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>جميع الحقوق محفوظة &copy; 2023 أكاديمية تطوير الويب</p>
+        </footer>
     </div>
 </body>
 </html>

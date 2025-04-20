@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة الدخول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* التنسيقات العامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+        
+        /* حاوية رئيسية */
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        /* معرض الصور */
+        .image-gallery {
+            display: flex;
+            width: 100%;
+            height: 500px;
+            position: relative;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-slide {
+            min-width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+        }
+        
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .slide-caption h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .slide-caption p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* نقاط التنقل */
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background-color: #4a6cf7;
+            transform: scale(1.2);
+        }
+        
+        /* نموذج الدخول */
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .login-btn {
+            background-color: #4a6cf7;
+            color: white;
+        }
+        
+        .signup-btn {
+            background-color: transparent;
+            color: #4a6cf7;
+            border: 2px solid #4a6cf7;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.3);
+        }
+        
+        /* تأثيرات الحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .image-gallery {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .auth-container {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .image-gallery {
+                height: 400px;
+            }
+            
+            .slide-caption h2 {
+                font-size: 1.5rem;
+            }
+            
+            .slide-caption p {
+                font-size: 1rem;
+            }
+            
+            .auth-container {
+                padding: 1.5rem;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- معرض الصور -->
+        <div class="image-gallery">
+            <div class="gallery-slide active">
+                <img src="https://source.unsplash.com/random/1200x800/?technology" alt="Technology">
+                <div class="slide-caption">
+                    <h2>تكنولوجيا متطورة</h2>
+                    <p>اكتشف أحدث الابتكارات التقنية</p>
+                </div>
+            </div>
+            
+            <div class="gallery-slide">
+                <img src="https://source.unsplash.com/random/1200x800/?nature" alt="Nature">
+                <div class="slide-caption">
+                    <h2>جمال الطبيعة</h2>
+                    <p>استمتع بمناظر طبيعية خلابة</p>
+                </div>
+            </div>
+            
+            <div class="gallery-slide">
+                <img src="https://source.unsplash.com/random/1200x800/?architecture" alt="Architecture">
+                <div class="slide-caption">
+                    <h2>تصاميم معمارية</h2>
+                    <p>أعظم الإنجازات المعمارية</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gallery-dots">
+            <div class="dot active" data-slide="0"></div>
+            <div class="dot" data-slide="1"></div>
+            <div class="dot" data-slide="2"></div>
+        </div>
+        
+        <!-- نموذج الدخول -->
+        <div class="auth-container">
+            <h1 class="auth-title">مرحباً بك</h1>
+            
+            <div class="auth-buttons">
+                <button class="auth-btn login-btn">تسجيل الدخول</button>
+                <button class="auth-btn signup-btn">إنشاء حساب</button>
+            </div>
+            
+            <p>أو الدخول باستخدام</p>
+            
+            <div class="social-icons" style="margin-top: 1rem;">
+                <i class="fab fa-google social-icon" style="color: #DB4437; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+                <i class="fab fa-facebook-f social-icon" style="color: #4267B2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+                <i class="fab fa-twitter social-icon" style="color: #1DA1F2; margin: 0 10px; font-size: 1.5rem; cursor: pointer;"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // سكريبت لتحريك معرض الصور
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.gallery-slide');
+            const dots = document.querySelectorAll('.dot');
+            let currentSlide = 0;
+            
+            // تغيير الشريحة عند النقر على النقاط
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    goToSlide(slideIndex);
+                });
+            });
+            
+            // التمرير التلقائي
+            setInterval(nextSlide, 5000);
+            
+            function goToSlide(n) {
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+                
+                currentSlide = (n + slides.length) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }
+            
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+            
+            // تأثيرات الأزرار
+            const buttons = document.querySelectorAll('.auth-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

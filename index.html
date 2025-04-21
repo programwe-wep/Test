@@ -345,10 +345,7 @@ body.show-emoji-picker em-emoji-picker {
 </head>
   <body>
     <!-- Chatbot Toggler -->
-    <button id="chatbot-toggler">
-      <span class="material-symbols-rounded">mode_comment</span>
-      <span class="material-symbols-rounded">close</span>
-    </button>
+    
     <div class="chatbot-popup">
       <!-- Chatbot Header -->
       <div class="chat-header">
@@ -401,8 +398,6 @@ body.show-emoji-picker em-emoji-picker {
         const fileInput = document.querySelector("#file-input");
         const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
         const fileCancelButton = fileUploadWrapper.querySelector("#file-cancel");
-        const chatbotToggler = document.querySelector("#chatbot-toggler");
-        const closeChatbot = document.querySelector("#close-chatbot");
         // API setup
         const API_KEY = "AIzaSyAS5mGwYJWajRrlcuzTUVlOlsAH62qRlbo";
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;

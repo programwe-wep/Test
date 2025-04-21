@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* ... (نفس كود CSS السابق) ... */
         * {
             margin: 0;
             padding: 0;
@@ -306,11 +307,12 @@
     </style>
 </head>
 <body>
+    <!-- ... (نفس كود HTML السابق) ... -->
     <div class="container">
         <header>
             <div class="logo">
-                <i class="fab fa-ai"></i>
-                <h1>Micro Ai</h1>
+                <i class="fab fa-chat"></i>
+                <h1>Micro Alx</h1>
             </div>
             <div class="user">
                 <i class="fas fa-user"></i>
@@ -375,13 +377,16 @@
             // متغيرات الحالة
             let isListening = false;
             let recognition = null;
+            const API_KEY = 'AIzaSyAS5mGwYJWajRrlcuzTUVlOlsAH62qRlbo';
+            const PROJECT_ID = 'YOUR_PROJECT_ID'; // استبدل بمعرف مشروعك في Google Cloud
+            const API_URL = `https://dialogflow.googleapis.com/v2/projects/${PROJECT_ID}/agent/sessions/123456789:detectIntent`;
 
-            // تهيئة Web Speech API إذا كان متاحًا
+            // تهيئة Web Speech API
             if ('webkitSpeechRecognition' in window) {
                 recognition = new webkitSpeechRecognition();
                 recognition.continuous = false;
                 recognition.interimResults = false;
-                recognition.lang = 'ar-SA'; // اللغة العربية - السعودية
+                recognition.lang = 'ar-SA';
 
                 recognition.onstart = function() {
                     isListening = true;
@@ -412,21 +417,34 @@
                 console.log('ميزة التعرف على الصوت غير متاحة في متصفحك');
             }
 
-            // محاكاة API
-            async function simulateAPI(message) {
-                // محاكاة وقت استجابة الخادم
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                const greetings = ["مرحباً!", "أهلاً وسهلاً!", "كيف يمكنني مساعدتك اليوم؟"];
-                const questions = ["هذا سؤال جيد!", "دعني أفكر في هذا...", "هل يمكنك توضيح سؤالك أكثر؟"];
-                const images = ["شكراً لمشاركة الصورة معي!", "هذه صورة رائعة!", "أرى ما تريد مشاركته."];
-                
-                if (message.includes("صورة")) {
-                    return images[Math.floor(Math.random() * images.length)];
-                } else if (message.includes("؟") || message.includes("هل")) {
-                    return questions[Math.floor(Math.random() * questions.length)];
-                } else {
-                    return greetings[Math.floor(Math.random() * greetings.length)];
+            // التواصل مع Dialogflow API
+            async function sendToDialogflow(message) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            queryInput: {
+                                text: {
+                                    text: message,
+                                    languageCode: 'ar'
+                                }
+                            }
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`خطأ في API: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data.queryResult.fulfillmentText || "لم أفهم طلبك، هل يمكنك توضيحه أكثر؟";
+                } catch (error) {
+                    console.error('Error calling Dialogflow:', error);
+                    return "عذراً، حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقاً.";
                 }
             }
 
@@ -441,8 +459,8 @@
                     const loadingMsg = addMessage("جاري التفكير...", 'assistant');
                     
                     try {
-                        // محاكاة API
-                        const response = await simulateAPI(message);
+                        // إرسال إلى Dialogflow API
+                        const response = await sendToDialogflow(message);
                         
                         // إزالة رسالة التحميل وإضافة الرد
                         chatMessages.removeChild(loadingMsg);
@@ -466,8 +484,6 @@
                 }
                 
                 chatMessages.appendChild(messageDiv);
-                
-                // التمرير إلى الأسفل
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
                 return messageDiv;
@@ -486,8 +502,8 @@
                         const loadingMsg = addMessage("جاري تحليل الصورة...", 'assistant');
                         
                         try {
-                            // محاكاة API للصور
-                            const response = await simulateAPI("صورة");
+                            // محاكاة تحليل الصورة (لن يعمل مع Dialogflow بدون تكامل إضافي)
+                            const response = "شكراً لمشاركة الصورة معي! لكنني حالياً أستطيع معالجة النصوص فقط.";
                             
                             // إزالة رسالة التحميل وإضافة الرد
                             chatMessages.removeChild(loadingMsg);
@@ -503,7 +519,6 @@
 
             // أحداث النقر
             sendBtn.addEventListener('click', sendMessage);
-            
             voiceBtn.addEventListener('click', function() {
                 if (recognition) {
                     if (isListening) {
@@ -515,11 +530,9 @@
                     alert('ميزة التعرف على الصوت غير متاحة في متصفحك');
                 }
             });
-            
             sendImageBtn.addEventListener('click', function() {
                 imageUpload.click();
             });
-            
             imageUpload.addEventListener('change', handleImageUpload);
 
             // إرسال بالضغط على Enter
